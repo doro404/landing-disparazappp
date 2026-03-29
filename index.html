@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Robô Baileys</title>
+    <script>
+      window.addEventListener('error', function(e) {
+        document.getElementById('root').innerHTML =
+          '<div style="padding:32px;font-family:monospace;background:#07122b;color:#e8f4f8;min-height:100vh">' +
+          '<h2 style="color:#ef4444">Erro fatal</h2>' +
+          '<pre style="color:#fbbf24;white-space:pre-wrap;font-size:13px">' +
+          (e.message || '') + '\n\n' + (e.filename || '') + ':' + e.lineno +
+          '\n\n' + (e.error && e.error.stack ? e.error.stack : '') +
+          '</pre></div>';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        document.getElementById('root').innerHTML =
+          '<div style="padding:32px;font-family:monospace;background:#07122b;color:#e8f4f8;min-height:100vh">' +
+          '<h2 style="color:#ef4444">Promise rejeitada</h2>' +
+          '<pre style="color:#fbbf24;white-space:pre-wrap;font-size:13px">' +
+          (e.reason && e.reason.stack ? e.reason.stack : String(e.reason)) +
+          '</pre></div>';
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

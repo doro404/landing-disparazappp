@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                 String    @id @default(uuid())
+  slug               String    @unique
+  name               String
+  defaultMaxMachines Int       @default(1)
+  defaultTrialDays   Int?
+  features           String?   // JSON array of feature flags
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  licenses           License[]
+}
+
+model License {
+  id              String       @id @default(uuid())
+  key             String       @unique
+  productId       String
+  product         Product      @relation(fields: [productId], references: [id])
+  maxMachines     Int          @default(1)
+  expiresAt       DateTime?
+  revoked         Boolean      @default(false)
+  entitlements    String?      // JSON array of entitlement strings
+  metadata        String?      // JSON object for arbitrary data
+  customerEmail   String?      // email do comprador
+  customerName    String?      // nome do comprador
+  orderId         String?      // ID do pedido (Stripe, etc.)
+  notes           String?      // notas internas do admin
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  activations     Activation[]
+}
+
+model Activation {
+  id           String   @id @default(uuid())
+  licenseId    String
+  license      License  @relation(fields: [licenseId], references: [id])
+  fingerprint  String              // combined hash (legado + lookup principal)
+  stableFp     String?             // hash dos sinais estáveis
+  volatileFp   String?             // hash dos sinais voláteis (atualizado silenciosamente)
+  ip           String?
+  lastSeen     DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@unique([licenseId, fingerprint])
+}
+
+model AppUpdate {
+  id          String   @id @default(uuid())
+  productSlug String
+  version     String
+  fileName    String   // nome do arquivo no disco
+  fileSize    Int      @default(0)
+  changelog   String   @default("")
+  force       Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@unique([productSlug, version])
+  @@index([productSlug])
+}
+
+model Trial {
+  id          String   @id @default(uuid())
+  fingerprint String   @unique   // uma trial por máquina
+  productSlug String
+  startedAt   DateTime @default(now())
+  expiresAt   DateTime
+  sends       Int      @default(0)
+  exhausted   Boolean  @default(false) // true quando sends >= limit
+  ip          String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

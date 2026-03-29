@@ -1,0 +1,198 @@
+/**
+ * themeStyles.css
+ * Estilos globais que aplicam os temas
+ */
+
+:root {
+  /* Cores padrão (tema light) - WASender Premium Style */
+  --color-bgPrimary: #f0f9ff;
+  --color-bgSecondary: #ffffff;
+  --color-bgTertiary: #f8fafc;
+  --color-textPrimary: #1f2937;
+  --color-textSecondary: #64748b;
+  --color-textInverse: #ffffff;
+  --color-accentPrimary: #7c3aed;
+  --color-accentSuccess: #25D366;
+  --color-accentWarning: #f59e0b;
+  --color-accentError: #dc2626;
+  --color-headerBg: #ffffff;
+  --color-sidebarBg: #ffffff;
+  --color-sidebarText: #1f2937;
+  --color-buttonPrimaryBg: #25D366;
+  --color-buttonPrimaryText: #ffffff;
+  --color-buttonSecondaryBg: #f3e8ff;
+  --color-buttonSecondaryText: #7c3aed;
+  --color-borderColor: #e2e8f0;
+  --color-shadowColor: rgba(0, 0, 0, 0.1);
+  --color-deviceConnectedGradientStart: #25D366;
+  --color-deviceConnectedGradientEnd: #10b981;
+  --color-stepIndicatorColor: #7c3aed;
+  /* Log colors */
+  --color-logBg: #1e2937;
+  --color-logText: #34d399;
+  /* Sidebar selected */
+  --color-sidebarSelectedBg: #f3e8ff;
+  --color-sidebarSelectedText: #7c3aed;
+}
+
+/* Tema escuro */
+body.theme-dark {
+  --color-bgPrimary: #0f172a;
+  --color-bgSecondary: #1e293b;
+  --color-bgTertiary: #334155;
+  --color-textPrimary: #f1f5f9;
+  --color-textSecondary: #cbd5e1;
+  --color-textInverse: #0f172a;
+  --color-accentPrimary: #a78bfa;
+  --color-accentSuccess: #10b981;
+  --color-accentWarning: #f59e0b;
+  --color-accentError: #f87171;
+  --color-headerBg: #1e293b;
+  --color-sidebarBg: #1e293b;
+  --color-sidebarText: #f1f5f9;
+  --color-buttonPrimaryBg: #25D366;
+  --color-buttonPrimaryText: #0f172a;
+  --color-buttonSecondaryBg: #7c3aed;
+  --color-buttonSecondaryText: #ffffff;
+  --color-borderColor: #475569;
+  --color-shadowColor: rgba(0, 0, 0, 0.3);
+  --color-stepIndicatorColor: #818cf8;
+}
+
+/* Tema roxo */
+body.theme-purple {
+  --color-bgPrimary: #faf5ff;
+  --color-bgSecondary: #ffffff;
+  --color-bgTertiary: #f3e8ff;
+  --color-textPrimary: #4c1d95;
+  --color-textSecondary: #7e22ce;
+  --color-textInverse: #ffffff;
+  --color-accentPrimary: #7c3aed;
+  --color-accentSuccess: #059669;
+  --color-accentWarning: #d97706;
+  --color-accentError: #dc2626;
+  --color-headerBg: #ffffff;
+  --color-sidebarBg: #ffffff;
+  --color-sidebarText: #4c1d95;
+  --color-buttonPrimaryBg: #7c3aed;
+  --color-buttonPrimaryText: #ffffff;
+  --color-buttonSecondaryBg: #e9d5ff;
+  --color-buttonSecondaryText: #4c1d95;
+  --color-borderColor: #ddd6fe;
+  --color-shadowColor: rgba(124, 58, 237, 0.15);
+  --color-stepIndicatorColor: #6366f1;
+}
+
+/* Aplicar cores ao fundo da página */
+body {
+  background-color: var(--color-bgPrimary);
+  color: var(--color-textPrimary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  background-color: var(--color-bgPrimary);
+  min-height: 100vh;
+}
+
+/* Light Mode - Melhorias Premium de Contraste, Sombra e Bordas */
+body:not(.theme-dark):not(.theme-purple) {
+  /* Sombras mais visíveis e profissionais */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Cards e painéis - sombra suave visível */
+body:not(.theme-dark):not(.theme-purple) .card-wa,
+body:not(.theme-dark):not(.theme-purple) .rounded-xl {
+  border-color: var(--color-borderColor);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body:not(.theme-dark):not(.theme-purple) .card-wa:hover,
+body:not(.theme-dark):not(.theme-purple) .rounded-xl:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Headers com sombra mais forte */
+body:not(.theme-dark):not(.theme-purple) header,
+body:not(.theme-dark):not(.theme-purple) [class*="border-b"] {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Botões primários com gradiente e sombra */
+body:not(.theme-dark):not(.theme-purple) .btn-primary,
+body:not(.theme-dark):not(.theme-purple) button[class*="bg-\[#25D366\]"],
+body:not(.theme-dark):not(.theme-purple) .bg-wa-green {
+  background: linear-gradient(135deg, #25D366 0%, #10b981 100%);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+}
+
+body:not(.theme-dark):not(.theme-purple) .btn-primary:hover,
+body:not(.theme-dark):not(.theme-purple) button[class*="bg-\[#25D366\]"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 211, 102, 0.35);
+}
+
+/* Botões roxos - vibrantes */
+body:not(.theme-dark):not(.theme-purple) button[class*="bg-wa-medium"],
+body:not(.theme-dark):not(.theme-purple) .bg-wa-medium {
+  background-color: #7c3aed;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.2);
+}
+
+body:not(.theme-dark):not(.theme-purple) button[class*="bg-wa-medium"]:hover,
+body:not(.theme-dark):not(.theme-purple) .bg-wa-medium:hover {
+  background-color: #6d28d9;
+  box-shadow: 0 6px 12px rgba(124, 58, 237, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Inputs com foco vibrante roxo */
+body:not(.theme-dark):not(.theme-purple) input:focus,
+body:not(.theme-dark):not(.theme-purple) textarea:focus {
+  outline: none;
+  border-color: var(--color-accentPrimary);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* CORREÇÃO de text-white em Light Mode */
+/* ─────────────────────────────────────────────────────────────── */
+
+/* Light Mode - Força textos com boa legibilidade */
+body:not(.theme-dark):not(.theme-purple) .text-white {
+  color: var(--color-textPrimary) !important;
+}
+
+body:not(.theme-dark):not(.theme-purple) .text-white\/70 {
+  color: var(--color-textSecondary) !important;
+}
+
+body:not(.theme-dark):not(.theme-purple) .text-white\/50 {
+  color: var(--color-textSecondary) !important;
+  opacity: 0.7;
+}
+
+body:not(.theme-dark):not(.theme-purple) .text-white\/40 {
+  color: var(--color-textSecondary) !important;
+  opacity: 0.5;
+}
+
+/* Exceção: Manter text-white em componentes com fundo roxo/verde definido */
+body:not(.theme-dark):not(.theme-purple) .bg-wa-medium .text-white,
+body:not(.theme-dark):not(.theme-purple) button.bg-wa-medium .text-white,
+body:not(.theme-dark):not(.theme-purple) [class*="bg-\[#25D366\]"] .text-white {
+  color: #ffffff !important;
+}
+
+/* Hover states - adaptar ao tema */
+body:not(.theme-dark):not(.theme-purple) .hover:text-white:hover {
+  color: var(--color-textPrimary) !important;
+}

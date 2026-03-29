@@ -1,0 +1,46 @@
+{
+  "name": "baileys-server",
+  "version": "1.0.0",
+  "description": "Sidecar Node.js para WhatsApp via Baileys",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "bundle": "esbuild index.js --bundle --platform=node --target=node18 --format=cjs --outfile=index.bundle.cjs --external:pino-pretty --external:pino/file --external:playwright-core",
+    "build": "npm run bundle && pkg index.bundle.cjs --targets node18-win-x64 --output ../src-tauri/binaries/baileys-server-x86_64-pc-windows-msvc.exe"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.21",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jimp": "^1.6.0",
+    "link-preview-js": "^3.0.5",
+    "node-cron": "^4.2.1",
+    "pino": "^8.21.0",
+    "pino-pretty": "^10.3.1",
+    "playwright-core": "^1.58.2",
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^5.16.1",
+    "esbuild": "^0.27.4",
+    "nodemon": "^3.1.9"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/@whiskeysockets/baileys/**/*",
+      "node_modules/pino/**/*",
+      "node_modules/pino-pretty/**/*",
+      "node_modules/playwright-core/**/*",
+      "maps-scraper.js"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ],
+    "scripts": [
+      "index.bundle.cjs"
+    ]
+  }
+}

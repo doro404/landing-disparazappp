@@ -1,0 +1,99 @@
+🚀 DISPARA ZAPP — Automação Profissional para WhatsApp
+
+Você irá receber o sistema completo e acesso vitalício a todas as atualizações.
+
+⚠️ ATENÇÃO!! SÓ FUNCIONA NO SISTEMA WINDOWS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📱 MULTI-CONTAS SIMULTÂNEAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Conecte até 5 números de WhatsApp ao mesmo tempo em uma única tela.
+Cada conta opera de forma totalmente independente, com dados, sessão e configurações separadas.
+Conexão via QR Code ou Código de Pareamento (sem precisar escanear).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+� DISPARO EM MASSA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Envie mensagens para centenas ou milhares de contatos de uma vez.
+Suporte a texto, imagens, vídeos, PDFs e documentos.
+Envio de múltiplas mensagens em sequência para o mesmo número.
+Importe sua lista de contatos em TXT ou CSV.
+Embaralhamento automático da lista para parecer mais humano.
+Remoção automática de números duplicados antes do envio.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+�️ PROTEÇÃO ANTI-BAN COMPLETA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Delay aleatório, fixo ou progressivo entre cada envio.
+Simulação de digitação ("digitando...") antes de cada mensagem.
+Simulação de presença online antes de enviar.
+Envio em lotes com pausa configurável entre cada lote.
+Limite de envios por hora e por dia.
+Reenvio automático de mensagens que falharam (com delay e tentativas configuráveis).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+� MENSAGENS DINÂMICAS E PERSONALIZADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Use variáveis que são substituídas automaticamente para cada destinatário:
+  {nome}     → nome do contato
+  {numero}   → número do destinatário
+  {data}     → data atual
+  {hora}     → hora atual
+  {campanha} → nome da campanha
+  {grupo}    → nome do grupo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 AGENDAMENTOS AUTOMÁTICOS (CAMPANHAS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Crie campanhas que disparam sozinhas no horário que você definir.
+Periodicidades disponíveis:
+  • Por intervalo: a cada X minutos, horas ou dias
+  • Diário: todo dia em um horário fixo
+  • Semanal: dias da semana específicos
+  • Mensal: dia do mês específico
+Limite diário por campanha para não ultrapassar cotas.
+Pause e retome campanhas com um clique.
+Disparo manual imediato ("Disparar agora") quando precisar.
+Log em tempo real de cada envio da campanha.
+Histórico do último disparo com total de enviados e falhas.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👥 GESTÃO DE GRUPOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Carregue todos os grupos que você participa automaticamente.
+Extraia o número de todos os membros de qualquer grupo.
+Veja quem é admin e quem é membro comum.
+Exporte a lista de participantes em CSV.
+Copie todos os números com um clique para usar no disparo.
+Envie mensagens diretamente para grupos selecionados.
+Selecione todos os grupos de uma vez para campanhas em massa.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 AUTO-RESPOSTA INTELIGENTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Responda mensagens automaticamente com base em regras configuráveis.
+Gatilhos por palavra-chave com modos: contém, exato, começa com, regex.
+Funciona em conversas privadas, grupos ou ambos.
+Cooldown configurável para não responder o mesmo contato várias vezes.
+Opção de responder apenas uma vez por contato.
+Simulação de digitação antes de responder.
+Variáveis dinâmicas nas respostas ({nome}, {hora}, {mensagem}, etc).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 MONITORAMENTO EM TEMPO REAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Terminal de log embutido mostra cada envio em tempo real.
+Estatísticas de enviados, falhas e total por sessão.
+Log separado para disparos em massa e campanhas agendadas.
+Indicador de progresso durante o disparo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💾 DADOS SEGUROS E LOCAIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Tudo roda 100% no seu computador — nenhum dado sai da sua máquina.
+Sessões, campanhas e regras são salvas localmente e persistem entre reinicializações.
+Reconexão automática ao reiniciar o sistema.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔒 Garantia do vendedor: 7 dias
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

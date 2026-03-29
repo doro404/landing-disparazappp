@@ -1,0 +1,27 @@
+{
+  "session-1": {
+    "enabled": true,
+    "rules": []
+  },
+  "session-5": {
+    "enabled": false,
+    "rules": [
+      {
+        "enabled": true,
+        "name": "Regra 1",
+        "trigger": "a",
+        "matchMode": "contains",
+        "caseSensitive": false,
+        "targetType": "all",
+        "targetNumbers": [],
+        "response": "TABELA DIVULGAÇÃO \n🚀 1 DIA  10,00\n🚀 2 DIA 20,00\n🚀 3 DIA 30,00\n🚀 4 DIA 40,00\n🚀 5 DIA 50,00\n🚀 10 DIA 100,00\n🚀 20 DIA 200,00\n🚀 30 DIA 300,00\n\nhttps://api.whatsapp.com/send?phone=+5567993182190&text=Ol%C3%A1%2C%20tenho%20i",
+        "simulateTyping": true,
+        "typingDelay": 1500,
+        "cooldown": 30000,
+        "onlyOnce": true,
+        "respondedNumbers": [],
+        "id": "4p7xxn4"
+      }
+    ]
+  }
+}

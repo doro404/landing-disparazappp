@@ -1,0 +1,44 @@
+# ─── Node / deps ─────────────────────────────────────────────────────────────
+node_modules/
+dist/
+
+# ─── Env / secrets ───────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+landing/.env.local
+license-manager/.env
+
+# ─── Rust / Tauri ────────────────────────────────────────────────────────────
+src-tauri/target/
+src-tauri/binaries/
+*.key
+*.key.pub
+
+# ─── Baileys sessions (dados sensíveis) ──────────────────────────────────────
+baileys-server/sessions/
+baileys-server/dispara-zapp-data/
+baileys-server/stats.json
+baileys-server/node_modules/
+baileys-server/index.bundle.cjs
+
+# ─── Landing (Next.js build) ─────────────────────────────────────────────────
+landing/.next/
+landing/node_modules/
+landing/public/downloads/
+
+# ─── License manager (build/db) ──────────────────────────────────────────────
+license-manager/node_modules/
+license-manager/dist/
+license-manager/*.db
+license-manager/dev.db
+license-manager/uploads/
+
+# ─── Misc ────────────────────────────────────────────────────────────────────
+.DS_Store
+*.log
+Thumbs.db
+IMPLEMENTATION_SUMMARY.md
+*.zip
+*.png
+1678140600lS8T5SkGWjUDMw00x8aR.png

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 50% 8%;
+    --foreground: 200 30% 92%;
+    --card: 210 45% 12%;
+    --card-foreground: 200 30% 92%;
+    --popover: 210 45% 10%;
+    --popover-foreground: 200 30% 92%;
+    --primary: 158 64% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 18%;
+    --secondary-foreground: 200 30% 85%;
+    --muted: 210 40% 16%;
+    --muted-foreground: 210 20% 55%;
+    --accent: 158 64% 52%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 35% 20%;
+    --input: 210 35% 18%;
+    --ring: 158 64% 40%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-wa-bg text-wa-text font-sans antialiased;
+    background: var(--color-bgPrimary);
+    min-height: 100vh;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bgSecondary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-borderColor);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accentPrimary);
+  }
+}
+
+@layer components {
+  .card-wa {
+    @apply bg-wa-card border border-wa-border rounded-xl p-4 shadow-lg;
+  }
+  .btn-wa-primary {
+    @apply bg-wa-medium hover:bg-wa-green text-white font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200 shadow-lg hover:shadow-wa-green/30 hover:scale-[1.02]
+           active:scale-[0.98] flex items-center gap-2;
+  }
+  .btn-wa-secondary {
+    @apply bg-wa-border hover:bg-wa-medium/40 text-wa-text font-medium px-4 py-2 rounded-lg
+           transition-all duration-200 flex items-center gap-2;
+  }
+  .status-dot {
+    @apply w-2.5 h-2.5 rounded-full inline-block;
+  }
+  .status-dot.connected {
+    @apply bg-wa-green animate-pulse-green;
+  }
+  .status-dot.disconnected {
+    @apply bg-red-500;
+  }
+  .status-dot.qr {
+    @apply bg-yellow-400 animate-pulse;
+  }
+  .terminal-line {
+    @apply font-mono text-xs leading-relaxed;
+  }
+  .terminal-line.info { @apply text-wa-teal; }
+  .terminal-line.success { @apply text-wa-green; }
+  .terminal-line.error { @apply text-red-400; }
+  .terminal-line.warn { @apply text-yellow-400; }
+}
