@@ -97,13 +97,24 @@ export const adminApi = {
     list: () => req<AppUpdate[]>("/api/v1/updates/list"),
     delete: (id: string) => req<{ message: string }>(`/api/v1/updates/${id}`, "DELETE"),
     upload: async (formData: FormData) => {
+      const tokenRes = await fetch("/api/admin/upload-token", { method: "POST" });
+      const tokenJson = await tokenRes.json().catch(() => ({})) as {
+        success?: boolean;
+        data?: { uploadUrl?: string };
+        error?: string;
+      };
+
+      if (!tokenRes.ok || tokenJson.success === false || !tokenJson.data?.uploadUrl) {
+        throw new Error(tokenJson.error ?? `HTTP ${tokenRes.status}`);
+      }
+
       let res: Response;
       try {
-        res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+        res = await fetch(tokenJson.data.uploadUrl, { method: "POST", body: formData });
       } catch (error) {
         throw new Error(
           error instanceof Error
-            ? `Falha de rede no upload: ${error.message}. Verifique se a landing consegue acessar o License Manager e se o servidor aceita arquivos grandes.`
+            ? `Falha de rede no upload direto: ${error.message}. Verifique CORS, URL do License Manager e limite de upload do servidor.`
             : "Falha de rede no upload.",
         );
       }
