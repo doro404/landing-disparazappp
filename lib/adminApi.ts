@@ -29,6 +29,17 @@ export interface License {
   customerName?: string | null;
   orderId?: string | null;
   notes?: string | null;
+  activations?: LicenseActivation[];
+}
+
+export interface LicenseActivation {
+  id: string;
+  fingerprint: string;
+  stableFp?: string | null;
+  volatileFp?: string | null;
+  ip?: string | null;
+  createdAt: string;
+  lastSeen: string;
 }
 
 export interface Product {
