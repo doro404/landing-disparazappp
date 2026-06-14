@@ -824,9 +824,6 @@ function Footer() {
     <footer className="border-t border-white/5 py-10 px-4">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[#25D366] flex items-center justify-center">
-            <Zap className="w-3.5 h-3.5 text-black" fill="black" />
-          </div>
           <span className="font-bold text-sm">
             Dispara<span className="text-[#25D366]">Zapp</span>
           </span>
