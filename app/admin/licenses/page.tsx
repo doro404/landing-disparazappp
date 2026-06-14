@@ -402,8 +402,15 @@ function CreateBulkLicensesModal({ products, onCreated }: { products: Product[];
   );
 }
 
+function shortHash(value?: string | null) {
+  if (!value) return "-";
+  if (value.length <= 18) return value;
+  return `${value.slice(0, 10)}...${value.slice(-6)}`;
+}
+
 function LicenseRow({ l, onDelete, deleting }: { l: License; onDelete: (id: string) => void; deleting: boolean }) {
   const [expanded, setExpanded] = useState(false);
+  const activations = l.activations ?? [];
   return (
     <>
       <motion.tr
@@ -451,7 +458,7 @@ function LicenseRow({ l, onDelete, deleting }: { l: License; onDelete: (id: stri
               </div>
               <div>
                 <p className="text-white/30 mb-0.5">Máquinas</p>
-                <p className="text-white/60">{l.maxMachines}</p>
+                <p className="text-white/60">{activations.length}/{l.maxMachines} usadas</p>
               </div>
               <div>
                 <p className="text-white/30 mb-0.5">Expira em</p>
@@ -463,6 +470,56 @@ function LicenseRow({ l, onDelete, deleting }: { l: License; onDelete: (id: stri
                   <p className="text-white/60">{l.notes}</p>
                 </div>
               )}
+              <div className="col-span-2 md:col-span-4">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <p className="text-white/30">Ativacoes da licenca</p>
+                  <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-white/40">
+                    {activations.length}/{l.maxMachines}
+                  </span>
+                </div>
+
+                {activations.length === 0 ? (
+                  <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-white/30">
+                    Esta licenca ainda nao foi ativada em nenhuma maquina.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {activations.map((activation, index) => (
+                      <div key={activation.id} className="rounded-xl border border-white/10 bg-black/20 p-3">
+                        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                          <p className="text-xs font-semibold text-white/70">Maquina {index + 1}</p>
+                          <p className="text-[11px] text-white/35">IP: {activation.ip || "-"}</p>
+                        </div>
+                        <div className="grid gap-2 md:grid-cols-2">
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wide text-white/25">Ativada em</p>
+                            <p className="text-white/55">{new Date(activation.createdAt).toLocaleString("pt-BR")}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wide text-white/25">Ultimo uso</p>
+                            <p className="text-white/55">{new Date(activation.lastSeen).toLocaleString("pt-BR")}</p>
+                          </div>
+                          <div className="md:col-span-2">
+                            <p className="text-[10px] uppercase tracking-wide text-white/25">Fingerprint</p>
+                            <div className="flex items-center gap-1">
+                              <code className="font-mono text-[11px] text-white/55">{shortHash(activation.fingerprint)}</code>
+                              <CopyButton text={activation.fingerprint} />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wide text-white/25">Stable FP</p>
+                            <code className="font-mono text-[11px] text-white/45">{shortHash(activation.stableFp)}</code>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wide text-white/25">Volatile FP</p>
+                            <code className="font-mono text-[11px] text-white/45">{shortHash(activation.volatileFp)}</code>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </td>
         </tr>
@@ -527,7 +584,13 @@ export default function LicensesPage() {
       (l.customerName ?? "").toLowerCase().includes(q) ||
       (l.customerEmail ?? "").toLowerCase().includes(q) ||
       (l.orderId ?? "").toLowerCase().includes(q) ||
-      l.productSlug.toLowerCase().includes(q)
+      l.productSlug.toLowerCase().includes(q) ||
+      (l.activations ?? []).some((activation) =>
+        (activation.ip ?? "").toLowerCase().includes(q) ||
+        activation.fingerprint.toLowerCase().includes(q) ||
+        (activation.stableFp ?? "").toLowerCase().includes(q) ||
+        (activation.volatileFp ?? "").toLowerCase().includes(q)
+      )
     );
   });
 
