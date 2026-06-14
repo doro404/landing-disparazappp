@@ -66,9 +66,6 @@ function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-[#25D366] flex items-center justify-center glow-green-sm">
-            <Zap className="w-4 h-4 text-black" fill="black" />
-          </div>
           <span className="font-bold text-lg tracking-tight">
             Dispara<span className="text-[#25D366]">Zapp</span>
           </span>
