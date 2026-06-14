@@ -139,103 +139,6 @@ const statusConfig = {
   error: { label: "Falha", color: "text-red-400 bg-red-400/10 border-red-400/20" },
 };
 
-function DashboardMockup() {
-  return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      {/* Glow behind */}
-      <div className="absolute inset-0 bg-[#25D366]/10 blur-3xl rounded-3xl" />
-
-      <div className="relative glass rounded-2xl overflow-hidden border border-white/10">
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500/70" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-              <div className="w-3 h-3 rounded-full bg-[#25D366]/70" />
-            </div>
-            <span className="text-xs text-white/40 ml-2 font-mono">dispara-zapp — sessão-1</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-            <span className="text-xs text-[#25D366]">Conectado</span>
-          </div>
-        </div>
-
-        {/* Stats row */}
-        <div className="grid grid-cols-3 gap-px bg-white/5">
-          {[
-            { label: "Total", value: "1.247" },
-            { label: "Enviados", value: "1.189" },
-            { label: "Falhas", value: "58" },
-          ].map((s) => (
-            <div key={s.label} className="bg-[#050505] px-4 py-3 text-center">
-              <p className="text-lg font-bold text-white">{s.value}</p>
-              <p className="text-xs text-white/40">{s.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Progress bar */}
-        <div className="px-4 py-3 border-b border-white/5">
-          <div className="flex justify-between text-xs text-white/40 mb-1.5">
-            <span>Progresso do disparo</span>
-            <span>95.4%</span>
-          </div>
-          <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "95.4%" }}
-              transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-              viewport={{ once: true }}
-              className="h-full bg-gradient-to-r from-[#25D366] to-[#1fbd5a] rounded-full"
-            />
-          </div>
-        </div>
-
-        {/* Message list */}
-        <div className="divide-y divide-white/[0.04]">
-          {mockMessages.map((msg, i) => {
-            const s = statusConfig[msg.status as keyof typeof statusConfig];
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07, duration: 0.4 }}
-                viewport={{ once: true }}
-                className="flex items-center justify-between px-4 py-2.5 hover:bg-white/[0.02] transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-xs text-white/40 font-medium">
-                    {msg.name[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm text-white/80 font-medium">{msg.name}</p>
-                    <p className="text-xs text-white/30 font-mono">{msg.phone}</p>
-                  </div>
-                </div>
-                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${s.color}`}>
-                  {s.label}
-                </span>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Bottom bar */}
-        <div className="px-4 py-2.5 bg-white/[0.02] border-t border-white/5 flex items-center justify-between">
-          <span className="text-xs text-white/30 font-mono">delay: 1.2s–3.5s • anti-ban ativo</span>
-          <div className="flex items-center gap-1.5">
-            <RefreshCw className="w-3 h-3 text-[#25D366] animate-spin" style={{ animationDuration: "3s" }} />
-            <span className="text-xs text-[#25D366]">Enviando...</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function Hero() {
   return (
@@ -312,10 +215,6 @@ function Hero() {
           </div>
         </FadeIn>
 
-        {/* Dashboard mockup */}
-        <FadeIn delay={0.4} y={40}>
-          <DashboardMockup />
-        </FadeIn>
       </div>
     </section>
   );
