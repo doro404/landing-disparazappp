@@ -421,82 +421,6 @@ const logColors = {
   info:    "text-blue-400",
 };
 
-function TerminalPreview() {
-  const logRef = useRef(null);
-  const logInView = useInView(logRef, { once: true, amount: 0.2 });
-
-  return (
-    <section className="py-24 px-4 relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#25D366]/6 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto">
-        <FadeIn className="text-center mb-12">
-          <p className="text-xs font-semibold text-[#25D366] uppercase tracking-widest mb-3">Log em tempo real</p>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-            Acompanhe cada envio<br />
-            <span className="gradient-text">em tempo real</span>
-          </h2>
-        </FadeIn>
-
-        <FadeIn delay={0.2} y={30}>
-          <div className="relative glass rounded-2xl overflow-hidden border border-white/10">
-            {/* Terminal header */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                <div className="w-3 h-3 rounded-full bg-[#25D366]/60" />
-              </div>
-              <span className="text-xs text-white/30 font-mono ml-2">dispara-zapp — terminal</span>
-              <div className="ml-auto flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-                <span className="text-xs text-[#25D366] font-mono">live</span>
-              </div>
-            </div>
-
-            {/* Log lines */}
-            <motion.div
-              ref={logRef}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
-              initial="hidden"
-              animate={logInView ? "show" : "hidden"}
-              className="p-4 font-mono text-xs space-y-1.5 max-h-80 overflow-hidden"
-            >
-              {logLines.map((line, i) => (
-                <motion.div
-                  key={i}
-                  variants={{
-                    hidden: { opacity: 0, x: -10 },
-                    show: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-                  }}
-                  className="flex gap-2"
-                >
-                  <span className="text-white/20 select-none flex-shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className={logColors[line.type as keyof typeof logColors]}>
-                    {line.text}
-                  </span>
-                </motion.div>
-              ))}
-              {/* Blinking cursor */}
-              <div className="flex gap-2">
-                <span className="text-white/20">15</span>
-                <span className="text-white/40">
-                  <motion.span
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{ repeat: Infinity, duration: 1 }}
-                    className="inline-block w-2 h-3.5 bg-[#25D366] align-middle"
-                  />
-                </span>
-              </div>
-            </motion.div>
-          </div>
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
 
 // ─── Pricing ──────────────────────────────────────────────────────────────────
 const plans = [
@@ -930,7 +854,6 @@ export default function Page() {
       <Hero />
       <Features />
       <HowItWorks />
-      <TerminalPreview />
       <Pricing />
       <Testimonials />
       <FAQ />
