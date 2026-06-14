@@ -83,6 +83,8 @@ export const adminApi = {
     list: () => req<License[]>("/api/v1/licenses"),
     create: (data: CreateLicensePayload) =>
       req<License>("/api/v1/licenses", "POST", data),
+    createBulk: (data: CreateLicensePayload & { count: number }) =>
+      req<License[]>("/api/v1/licenses/bulk", "POST", data),
     delete: (id: string) =>
       req<{ message: string }>(`/api/v1/licenses/${id}`, "DELETE"),
   },
