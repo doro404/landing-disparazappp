@@ -97,7 +97,16 @@ export const adminApi = {
     list: () => req<AppUpdate[]>("/api/v1/updates/list"),
     delete: (id: string) => req<{ message: string }>(`/api/v1/updates/${id}`, "DELETE"),
     upload: async (formData: FormData) => {
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      let res: Response;
+      try {
+        res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      } catch (error) {
+        throw new Error(
+          error instanceof Error
+            ? `Falha de rede no upload: ${error.message}. Verifique se a landing consegue acessar o License Manager e se o servidor aceita arquivos grandes.`
+            : "Falha de rede no upload.",
+        );
+      }
       const json = await res.json().catch(() => ({})) as { success?: boolean; data?: AppUpdate; error?: string };
       if (!res.ok || json.success === false) throw new Error(json.error ?? `HTTP ${res.status}`);
       return json.data as AppUpdate;
