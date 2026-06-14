@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Key, Copy, Check, RefreshCw, Trash2, User, Mail, ShoppingBag, ChevronDown, ChevronUp } from "lucide-react";
+import { Plus, Key, Copy, Check, RefreshCw, Trash2, User, Mail, ShoppingBag, ChevronDown, ChevronUp, Layers, Download } from "lucide-react";
 import { AdminGuard } from "../components/AdminGuard";
 import { AdminSidebar } from "../components/AdminSidebar";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -189,6 +189,219 @@ function CreateLicenseModal({ products, onCreated }: { products: Product[]; onCr
   );
 }
 
+function CreateBulkLicensesModal({ products, onCreated }: { products: Product[]; onCreated: (licenses: License[]) => void }) {
+  const [open, setOpen] = useState(false);
+  const [productSlug, setProductSlug] = useState("");
+  const [count, setCount] = useState("20");
+  const [maxMachines, setMaxMachines] = useState("1");
+  const [entitlements, setEntitlements] = useState("");
+  const [expiryType, setExpiryType] = useState<"days" | "date" | "never">("days");
+  const [expiresInDays, setExpiresInDays] = useState("7");
+  const [expiresAt, setExpiresAt] = useState("");
+  const [notes, setNotes] = useState("Licenca de teste distribuida em grupo");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [created, setCreated] = useState<License[]>([]);
+
+  const keysText = created.map((license) => license.key).join("\n");
+  const shareText = created
+    .map((license, index) => `${index + 1}. ${license.key}`)
+    .join("\n");
+
+  const reset = () => {
+    setProductSlug("");
+    setCount("20");
+    setMaxMachines("1");
+    setEntitlements("");
+    setExpiryType("days");
+    setExpiresInDays("7");
+    setExpiresAt("");
+    setNotes("Licenca de teste distribuida em grupo");
+    setError("");
+    setCreated([]);
+  };
+
+  const copy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+  };
+
+  const downloadTxt = () => {
+    const blob = new Blob([keysText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `licencas-${new Date().toISOString().slice(0, 10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsedCount = parseInt(count, 10);
+    if (!productSlug) { setError("Selecione um produto."); return; }
+    if (!Number.isFinite(parsedCount) || parsedCount < 1 || parsedCount > 500) {
+      setError("Informe uma quantidade entre 1 e 500.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      const ents = entitlements.split(",").map((s) => s.trim()).filter(Boolean);
+      const result = await adminApi.licenses.createBulk({
+        productSlug,
+        count: parsedCount,
+        maxMachines: parseInt(maxMachines, 10) || 1,
+        entitlements: ents.length ? ents : undefined,
+        expiresInDays: expiryType === "days" && expiresInDays ? parseInt(expiresInDays, 10) : undefined,
+        expiresAt: expiryType === "date" && expiresAt ? new Date(expiresAt).toISOString() : undefined,
+        notes: notes || undefined,
+        metadata: {
+          distribution: "group-test",
+        },
+      });
+      setCreated(result);
+      onCreated(result);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) reset(); }}>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="outline"><Layers className="w-3.5 h-3.5" />Criar em lote</Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Criar licencas em lote</DialogTitle>
+          <DialogDescription>Gere varias chaves de teste para distribuir em grupos.</DialogDescription>
+        </DialogHeader>
+
+        {created.length > 0 ? (
+          <div className="space-y-4">
+            <div className="rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 p-4">
+              <p className="text-sm font-semibold text-[#25D366]">{created.length} licencas criadas com sucesso</p>
+              <p className="mt-1 text-xs text-white/45">Copie a lista abaixo e envie para o grupo de testes.</p>
+            </div>
+
+            <div>
+              <Label>Chaves geradas</Label>
+              <textarea
+                readOnly
+                value={shareText}
+                className="h-64 w-full resize-none rounded-xl border border-white/10 bg-black/30 p-3 font-mono text-xs leading-6 text-white/75 outline-none"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <Button type="button" onClick={() => copy(shareText)}>
+                <Copy className="w-3.5 h-3.5" />Copiar lista
+              </Button>
+              <Button type="button" variant="outline" onClick={() => copy(keysText)}>
+                <Copy className="w-3.5 h-3.5" />Copiar chaves
+              </Button>
+              <Button type="button" variant="outline" onClick={downloadTxt}>
+                <Download className="w-3.5 h-3.5" />Baixar .txt
+              </Button>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={() => { reset(); }}>Criar outro lote</Button>
+              <Button type="button" onClick={() => setOpen(false)}>Fechar</Button>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <Label>Produto</Label>
+                <select
+                  value={productSlug}
+                  onChange={(e) => setProductSlug(e.target.value)}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white transition-colors focus:border-[#25D366]/50 focus:outline-none"
+                >
+                  <option value="" className="bg-[#0d0d0d]">Selecionar produto...</option>
+                  {products.map((p) => (
+                    <option key={p.slug} value={p.slug} className="bg-[#0d0d0d]">{p.name} ({p.slug})</option>
+                  ))}
+                  {products.length === 0 && (
+                    <option value="dispara-zapp" className="bg-[#0d0d0d]">dispara-zapp</option>
+                  )}
+                </select>
+              </div>
+              <div>
+                <Label>Quantidade</Label>
+                <Input type="number" min="1" max="500" value={count} onChange={(e) => setCount(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <Label>Maximo de maquinas por chave</Label>
+                <Input type="number" min="1" max="99" value={maxMachines} onChange={(e) => setMaxMachines(e.target.value)} />
+              </div>
+              <div>
+                <Label>Validade</Label>
+                <div className="flex gap-2">
+                  {(["days", "date", "never"] as const).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setExpiryType(t)}
+                      className={`flex-1 rounded-lg border py-2 text-xs font-medium transition-all ${
+                        expiryType === t ? "border-[#25D366]/40 bg-[#25D366]/15 text-[#25D366]" : "border-white/10 text-white/40 hover:text-white/60"
+                      }`}
+                    >
+                      {t === "days" ? "Dias" : t === "date" ? "Data" : "Vitalicio"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {expiryType === "days" && (
+              <div>
+                <Label>Dias de teste</Label>
+                <Input type="number" min="1" value={expiresInDays} onChange={(e) => setExpiresInDays(e.target.value)} placeholder="Ex: 7" />
+              </div>
+            )}
+            {expiryType === "date" && (
+              <div>
+                <Label>Expira em</Label>
+                <Input type="date" value={expiresAt} onChange={(e) => setExpiresAt(e.target.value)} />
+              </div>
+            )}
+
+            <div>
+              <Label>Entitlements <span className="font-normal text-white/20">(opcional)</span></Label>
+              <Input value={entitlements} onChange={(e) => setEntitlements(e.target.value)} placeholder="pro, trial, group-test" />
+            </div>
+
+            <div>
+              <Label>Notas internas</Label>
+              <Input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Ex: Teste para grupo WhatsApp" />
+            </div>
+
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-white/45">
+              Cada pessoa recebe uma chave diferente. Use 1 maquina por chave para evitar que uma pessoa compartilhe a mesma licenca com varias instalacoes.
+            </div>
+
+            {error && <p className="rounded-xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs text-red-400">{error}</p>}
+
+            <div className="flex justify-end gap-2 pt-1">
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
+              <Button type="submit" disabled={loading}>{loading ? "Gerando..." : "Gerar licencas"}</Button>
+            </div>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function LicenseRow({ l, onDelete, deleting }: { l: License; onDelete: (id: string) => void; deleting: boolean }) {
   const [expanded, setExpanded] = useState(false);
   return (
@@ -337,6 +550,7 @@ export default function LicensesPage() {
                 <button onClick={load} className="text-white/30 hover:text-white/60 transition-colors" title="Recarregar">
                   <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
                 </button>
+                <CreateBulkLicensesModal products={products} onCreated={(items) => setLicenses((prev) => [...items, ...prev])} />
                 <CreateLicenseModal products={products} onCreated={(l) => setLicenses((prev) => [l, ...prev])} />
               </div>
             </div>
