@@ -1,7 +1,18 @@
 import "server-only";
 import { Resend } from "resend";
 
-export const resend = new Resend(process.env.RESEND_API_KEY!);
+let _resend: Resend | null = null;
+
+export function getResend(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error("RESEND_API_KEY environment variable is not set");
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 
 function buildEmailHtml(licenseKey: string, planLabel: string, downloadUrl: string, year: number): string {
   const steps: [string, string][] = [
@@ -139,7 +150,7 @@ export async function sendLicenseEmail({
   const planLabel   = plan === "lifetime" ? "Vitalicio" : "Anual";
   const year        = new Date().getFullYear();
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.RESEND_FROM ?? "DisparaZapp <noreply@yourdomain.com>",
     to,
     subject: "Sua licenca DisparaZapp esta pronta - ative agora",

@@ -1,7 +1,7 @@
 import "server-only";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 
 const checkoutSchema = z.object({
   plan: z.enum(["lifetime", "annual", "monthly"]),
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: PLAN_MODE[plan],
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: { plan },
